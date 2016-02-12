@@ -85,20 +85,22 @@ class Function():
         assert(steps is None or steps >= 1)
         
         output = self.f(i)
-        if output is UNDEF and steps is None:
-            print "{}({}) runs forever!".format(self, i)
-            if on_undef == "abort":
-                exit(1)
+        if output is UNDEF: # If the function would not terminate on this input.
+            if steps is None:
+                # If no steps have been specified, loop forever.
+                print "{}({}) runs forever!".format(self, i)
+                if on_undef == "abort":
+                    exit(1)
+            # Otherwise, return None.
             return None
-        elif output is UNDEF and steps is not None:
-            return None
-        elif output is not UNDEF and steps is None:
+        elif steps is None or output.steps <= steps:
+            # If the function would terminate on this input and no steps or
+            # enough steps have been provided, return its output.
             return output.value
-        elif output.steps <= steps:
-            return output.value
-
+        
+        # In all other cases return None.
         return None
-
+        
     def __str__(self):
         return self.name
 
