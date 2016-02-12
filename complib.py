@@ -89,8 +89,11 @@ class Function():
             print "{}({}) runs forever!".format(self, i)
             if on_undef == "abort":
                 exit(1)
+            return None
         elif output is UNDEF and steps is not None:
             return None
+        elif output is not UNDEF and steps is None:
+            return output.value
         elif output.steps <= steps:
             return output.value
 
@@ -108,10 +111,7 @@ def T3(f, i, t):
         Kleene's predicate of arity three.
         Returns `True` iff f(i) terminates in at most `t` steps.
     """
-    output = f(i)
-    if output is UNDEF:
-        return False
-    return (output.steps <= t)
+    return f(i, steps=t) is not None
 
 
 def T4(f, i, o, t):
@@ -119,10 +119,8 @@ def T4(f, i, o, t):
         Kleene's predicate of arity four.
         Returns `True` iff `f(i) outputs `o` in at most `t` steps.
     """
-    output = f(i)
-    if output is UNDEF:
-        return False
-    return (output.value == o and output.steps <= t)
+    output = f(i, steps=t)
+    return (output is not None and output == o)
 
 
 def dovetailing(f, stop_predicate):

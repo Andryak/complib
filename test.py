@@ -24,20 +24,17 @@ if __name__ == '__main__':
     )
 
     # Print the graphs of all functions in the range [0,10).
-    print "Graph of function f:"
-    f.pp_graph()
+    print "Graph of function f:"; f.pp_graph()
+    print "Graph of function g:"; g.pp_graph()
+    print "Graph of function K0:"; complib.K0.pp_graph()
+    print "Graph of function ident:"; complib.ident.pp_graph()
+    print "Graph of function undef:"; complib.undef.pp_graph()
     
-    print "Graph of function g:"
-    g.pp_graph()
-    
-    print "Graph of function K0:"
-    complib.K0.pp_graph()
-    
-    print "Graph of function ident:"
-    complib.ident.pp_graph()
-    
-    print "Graph of function undef:"
-    complib.undef.pp_graph()
+    print "Function f(0) halts in 1 step:", complib.T3(f,0,1)
+    print "Function g(0) halts in 1 step:", complib.T3(g,0,1)
+    print "Function K0(0) halts in 1 step:", complib.T3(complib.K0,0,1)
+    print "Function ident(0) halts in 1 step:", complib.T3(complib.ident,0,1)
+    print "Function undef(0) halts in 1 step:", complib.T3(complib.undef,0,1)
 
     # Extract the graphs of all functions in the range [0,3).
     print "Graph of function f:", f.graph(0,3)
